@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sysbench-disk
+spec:
+  template:
+    spec:
+      containers:
+      - name: sysbench-disk
+        imagePullPolicy: Always
+        image: rachitjain2706/sysbench-test
+        # command: ["sysbench", "--cpu-max-prime=30000", "--threads=2", "cpu", "run"]
+        volumeMounts:
+        - name: rachit-volume
+          mountPath: /mnt
+      restartPolicy: Never
+      volumes:
+        - name: rachit-volume
+          persistentVolumeClaim:
+            claimName: rachit-pvc
